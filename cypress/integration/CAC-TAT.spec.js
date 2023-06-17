@@ -118,7 +118,7 @@ describe('Central de Atendimento ao Cliente TAT', function() {
         })
     })
 
-    it.only('seleciona um arquivo utilizando uma fixture para a qual foi dada um alias', function() {
+    it('seleciona um arquivo utilizando uma fixture para a qual foi dada um alias', function() {
         cy.fixture('example.json').as('sampleFile')
         cy.get('input[type="file"]')
         .selectFile('@sampleFile')
@@ -137,6 +137,23 @@ describe('Central de Atendimento ao Cliente TAT', function() {
     .invoke('removeAttr', 'target')
     .click()    
     cy.contains('Talking About Testing').should('be.visible')
+  })
+
+  it.only('exibe e esconde as mensagens de sucesso e erro usando o .invoke', () => {
+    cy.get('.success')
+      .should('not.be.visible')
+      .invoke('show')
+      .should('be.visible')
+      .and('contain', 'Mensagem enviada com sucesso.')
+      .invoke('hide')
+      .should('not.be.visible')
+    cy.get('.error')
+      .should('not.be.visible')
+      .invoke('show')
+      .should('be.visible')
+      .and('contain', 'Valide os campos obrigatórios!')
+      .invoke('hide')
+      .should('not.be.visible')
   })
   
 
